@@ -3,15 +3,14 @@
 import { Ticker } from "./interfaces";
 import { data } from "./data";
 import Mediator from "./strategies/Mediator";
-import { VolumeHandler, PercentHandler } from './strategies';
+import { VolumeHandler, PercentHandler } from "./strategies";
 
 (async function() {
   // try {
-  //   const ticker = await ApiCaller.getPoloniex<Ticker>("returnTicker");
-  //   console.log(ticker)
+  //   const tickerData = await ApiCaller.getPoloniex<Ticker>("returnTicker");
+  //   console.log(tickerData)
   // } catch (e) {
-  //   console.log('Error: ')
-  //   console.log(e)
+  //   console.log('Error: ', e)
   // }
 
   Mediator.addHandler(PercentHandler);
@@ -19,6 +18,6 @@ import { VolumeHandler, PercentHandler } from './strategies';
 
   Object.entries(data).forEach(([index, values]) => {
     let tradeReply = Mediator.request(index, values);
-    console.log('tradeReply:', tradeReply);
+    console.log("tradeReply:", tradeReply);
   });
 })();

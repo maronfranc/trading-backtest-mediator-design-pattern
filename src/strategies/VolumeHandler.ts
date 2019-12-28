@@ -1,11 +1,11 @@
-import { Ticker } from "../interfaces";
+import { Ticker, Strategy } from "../interfaces";
 
-class VolumeHandler {
-  public canHandle(index: any, value: Ticker): boolean {
+class VolumeHandler implements Strategy {
+  public canHandle(index: string, value: Ticker): boolean {
     return value.baseVolume > "9.7";
   }
 
-  public handle(index: any, value: Ticker): any {
+  public handle(index: string, value: Ticker): any {
     return {
       pair: index,
       order: `Volume says: Buy ${index}!`

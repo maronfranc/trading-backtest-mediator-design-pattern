@@ -1,6 +1,6 @@
-import { Ticker } from "../interfaces";
+import { Ticker, Strategy } from "../interfaces";
 
-class PercentHandler {
+class PercentHandler implements Strategy {
   public canHandle(index: any, value: Ticker): boolean {
     return value.percentChange < "-0.12291480";
   }

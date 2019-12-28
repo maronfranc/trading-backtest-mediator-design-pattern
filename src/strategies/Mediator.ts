@@ -20,17 +20,14 @@ class Mediator {
     );
   }
 
-  request(price: any) {
+  request(index: any, value: any) {
     for (let i = 0; i < this.handlers.length; i++) {
       let handler: any = this.handlers[i];
-      if (handler.canHandle(price)) {
-        return handler.handle(price);
+      if (handler.canHandle(index, value)) {
+        return handler.handle(index, value);
       }
     }
-    // let error: any = new Error("Mediator was unable to satisfy request.");
-    // error.request = price;
-    // return error;
-    console.log("ERROR: Mediador não pôde satisfazer a requisição")
+    return { pair: index, error: "Mediador não pôde satisfazer o request" };
   }
 }
 export default new Mediator();

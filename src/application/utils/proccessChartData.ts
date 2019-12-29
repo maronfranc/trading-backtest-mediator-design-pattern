@@ -1,5 +1,5 @@
-import Mediator from "../trade/Mediator";
-import { ChartData } from "../interfaces";
+import Mediator from "../../domain/trade/Mediator";
+import { ChartData } from "../../typescript";
 
 export function proccessChartData(
   pair: string,

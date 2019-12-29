@@ -27,7 +27,7 @@ class Mediator {
         return handler.handle(index, value);
       }
     }
-    return { pair: index, error: "Mediador não pôde satisfazer o request" };
+    return { pair: index, error: "Mediator was unable to satisfy request." };
   }
 }
 export default new Mediator();

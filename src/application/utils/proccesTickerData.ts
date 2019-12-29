@@ -1,5 +1,5 @@
-import Mediator from "../trade/Mediator";
-import { TickerData } from "../interfaces";
+import Mediator from "../../domain/trade/Mediator";
+import { TickerData } from "../../typescript";
 
 export function proccessTickerData(
   data: Record<string, TickerData>,

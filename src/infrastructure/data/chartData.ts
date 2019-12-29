@@ -1,4 +1,4 @@
-import { ChartData } from "../interfaces/ChartData";
+import { ChartData } from "../../typescript/ChartData";
 
 // Pair BTC_ETH
 export const chartData: ChartData[] = [

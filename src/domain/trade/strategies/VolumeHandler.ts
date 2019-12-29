@@ -1,4 +1,4 @@
-import { TickerData, Strategy } from "../../interfaces";
+import { TickerData, Strategy } from "../../../typescript";
 
 class VolumeHandler implements Strategy<TickerData> {
   public canHandle(index: string, value: TickerData): boolean {

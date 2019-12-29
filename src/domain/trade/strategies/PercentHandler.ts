@@ -1,4 +1,4 @@
-import { TickerData, Strategy } from "../../interfaces";
+import { TickerData, Strategy } from "../../../typescript";
 
 class PercentHandler implements Strategy<TickerData> {
   public canHandle(index: any, value: TickerData): boolean {

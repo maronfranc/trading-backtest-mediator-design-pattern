@@ -1,5 +1,5 @@
-import { Strategy } from "../../interfaces";
-import { ChartData } from "../../interfaces/ChartData";
+import { Strategy } from "../../../typescript";
+import { ChartData } from "../../../typescript/ChartData";
 import MA from "../indicators/SimpleMovingAverage";
 
 class MAHandler implements Strategy<ChartData> {

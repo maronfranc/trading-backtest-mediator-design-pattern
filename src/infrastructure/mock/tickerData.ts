@@ -1,5 +1,6 @@
 import { TickerData } from "../../typescript";
 
+// https://poloniex.com/public?command=returnTicker
 export const tickerData: Record<string, TickerData> = {
   BTC_BCN: {
     id: 7,
@@ -1178,5 +1179,3 @@ export const tickerData: Record<string, TickerData> = {
     low24hr: "0.01300002"
   }
 };
-
-

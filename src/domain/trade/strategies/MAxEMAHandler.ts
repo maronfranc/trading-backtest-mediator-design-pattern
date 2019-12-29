@@ -19,6 +19,7 @@ class MAxEMAHandler implements Strategy<ChartData> {
   public handle(index: string, chartData: ChartData): any {
     return {
       pair: index,
+      amount: chartData,
       order: `Price closed above MA and EMA: Buy ${index}!`
     };
   }

@@ -1,6 +1,6 @@
-import Backtest from "./application/backtest";
+import Backtest from "./application/backtest/Backtest";
 
 (async function() {
-  const backtest = new Backtest();
-  backtest.run();
+  
+  Backtest.chart("BTC_ETH");
 })();

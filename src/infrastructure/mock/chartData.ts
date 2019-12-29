@@ -1,6 +1,7 @@
 import { ChartData } from "../../typescript/ChartData";
 
-// Pair BTC_ETH
+// Pair: BTC_ETH
+// https://poloniex.com/public?command=returnChartData&currencyPair=BTC_ETH&start=1546300800&end=1546646400&period=14400
 export const chartData: ChartData[] = [
   {
     date: 1546300800,

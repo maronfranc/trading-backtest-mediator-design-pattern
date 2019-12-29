@@ -1,8 +1,7 @@
 import axios, { AxiosInstance } from "axios";
-import { Dictionary } from "../interfaces";
 
 class ApiCaller {
-  async getPoloniex<Data>(command: commandTypes): Promise<Dictionary<Data>> {
+  async getPoloniex<Data>(command: string): Promise<any> {
     let url = `https://poloniex.com/public?command=${command}`;
     try {
       const response = await axios.get(url);
@@ -14,4 +13,4 @@ class ApiCaller {
 }
 export default new ApiCaller();
 
-export type commandTypes = "returnTicker";
+// export type commandTypes = "returnTicker";

@@ -1,5 +1,5 @@
-import { Dictionary } from "./Dictionary";
-import { Ticker } from "./Ticker";
+import { TickerData } from "./TickerData";
 import { Strategy } from "./Strategy";
+import { ChartData } from './ChartData';
 
-export { Dictionary, Ticker, Strategy };
+export { TickerData, Strategy, ChartData };

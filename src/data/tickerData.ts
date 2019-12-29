@@ -1,4 +1,6 @@
-export const data = {
+import { TickerData } from "../interfaces";
+
+export const data: Record<string, TickerData> = {
   BTC_BCN: {
     id: 7,
     last: "0.00000004",

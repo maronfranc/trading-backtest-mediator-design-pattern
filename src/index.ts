@@ -1,23 +1,32 @@
-// import axios from "axios";
-// import ApiCaller from "./services/ApiCaller";
-import { Ticker } from "./interfaces";
-import { data } from "./data";
-import Mediator from "./strategies/Mediator";
-import { VolumeHandler, PercentHandler } from "./strategies";
+import ApiCaller from "./services/ApiCaller";
+import { TickerData, ChartData } from "./interfaces";
+import { data } from "./data/tickerData";
+import Mediator from "./trade/Mediator";
+import { VolumeHandler, PercentHandler, MAxEMAHandler } from "./trade/strategies";
+import { proccessTickerData } from "./utils/proccesTickerData";
+import { proccessChartData } from "./utils/proccessChartData";
+import { chartData } from "./data/chartData";
 
 (async function() {
-  // try {
-  //   const tickerData = await ApiCaller.getPoloniex<Ticker>("returnTicker");
-  //   console.log(tickerData)
-  // } catch (e) {
-  //   console.log('Error: ', e)
-  // }
+  try {
+    // const ticker = await ApiCaller.getPoloniex<ChartData>("returnTicker");
+    // console.log(ticker.data)
 
-  Mediator.addHandler(PercentHandler);
-  Mediator.addHandler(VolumeHandler);
+    /**
+     * TickerData
+     */
+    // Mediator.addHandler(PercentHandler);
+    // Mediator.addHandler(VolumeHandler);
+    // proccessTickerData(data, Mediator)
+  
+    /**
+     * ChartData
+     */
+    Mediator.addHandler(MAxEMAHandler);
+    proccessChartData("BTC_ETH", chartData, Mediator);
+    // Mediator.addHandler(MAHandler);
 
-  Object.entries(data).forEach(([index, values]) => {
-    let tradeReply = Mediator.request(index, values);
-    console.log("tradeReply:", tradeReply);
-  });
+  } catch (e) {
+    console.log('Error: ', e)
+  }
 })();

@@ -1,4 +1,4 @@
-export interface Ticker {
+export interface TickerData {
   id: number,
   last: string,
   lowestAsk: string,

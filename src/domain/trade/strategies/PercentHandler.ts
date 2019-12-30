@@ -1,7 +1,7 @@
 import { TickerData, Strategy } from "../../../typescript";
 
 class PercentHandler implements Strategy<TickerData> {
-  public canHandle(index: any, value: TickerData): boolean {
+  public canHandle(value: TickerData): boolean {
     return value.percentChange < "-0.12291480";
   }
 

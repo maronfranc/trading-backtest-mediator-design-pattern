@@ -1,7 +1,7 @@
 import { TickerData, Strategy } from "../../../typescript";
 
 class VolumeHandler implements Strategy<TickerData> {
-  public canHandle(index: string, value: TickerData): boolean {
+  public canHandle(value: TickerData): boolean {
     return value.baseVolume > "9.7";
   }
 

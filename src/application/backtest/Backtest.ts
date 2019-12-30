@@ -9,6 +9,7 @@ import { chartData } from "../../infrastructure/mock/chartData";
 import { tickerData } from "../../infrastructure/mock/tickerData";
 import { ChartData, TickerData } from "../../typescript";
 import ApiCaller from "../services/ApiCaller";
+import Portfolio from "../../domain/repositories/Portoflio";
 
 class Backtest {
   async chart(pair: string) {
@@ -47,6 +48,10 @@ class Backtest {
     return chartData.forEach(data => {
       const tradeReply = mediator.request(pair, data);
       console.log("Backtest proccess:", tradeReply);
+      if (tradeReply.amount) {
+        Portfolio.buy(pair, 115, data.close);
+        console.log("Portfolio:", Portfolio);
+      }
       return tradeReply;
     });
   }

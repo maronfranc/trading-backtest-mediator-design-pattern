@@ -20,10 +20,10 @@ class Mediator {
     );
   }
 
-  request(index: any, value: any) {
+  request(index: string, value: any) {
     for (let i = 0; i < this.handlers.length; i++) {
       let handler: any = this.handlers[i];
-      if (handler.canHandle(index, value)) {
+      if (handler.canHandle(value)) {
         return handler.handle(index, value);
       }
     }

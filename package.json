@@ -1,18 +1,20 @@
 {
   "name": "tradingbacktest",
   "version": "1.0.0",
-  "description": "Typescript Node portfolio backtest",  
+  "description": "Typescript Node portfolio backtest",
   "keywords": [
     "trading",
     "backtest",
     "portfolio"
   ],
   "main": "./src/index.ts",
-  "repository": "https://github.com/maronfranc/trading-strategy-mediator-design-pattern", 
+  "repository": "https://github.com/maronfranc/trading-backtest-mediator-design-pattern",
   "author": "maronfranc",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.19.0"
+    "axios": "^0.19.0",
+    "ts-node": "^8.5.4",
+    "typescript": "^3.7.4"
   },
   "scripts": {
     "start": "ts-node ./src/index.ts"

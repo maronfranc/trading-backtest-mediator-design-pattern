@@ -1,4 +1,4 @@
-import { Strategy } from "../../../typescript";
+import { Strategy, Order } from "../../../typescript";
 import { ChartData } from "../../../typescript/ChartData";
 import SimpleMovingAverage from "../indicators/SimpleMovingAverage";
 
@@ -9,10 +9,17 @@ class MAHandler implements Strategy<ChartData> {
     return chartData.close > this.MAData.indicator;
   }
 
-  public handle(index: string, chartData: ChartData): any {
+  public buyHandle(index: string, chartData: ChartData): Order {
     return {
       pair: index,
-      order: `Price closed above MA: Buy ${index}!`
+      order: {buy: true}
+    };
+  }
+
+  public sellHandle(index: string, chartData: ChartData): Order {
+    return {
+      pair: index,
+      order: {sell: true}
     };
   }
 }

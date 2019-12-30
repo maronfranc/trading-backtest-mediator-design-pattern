@@ -1,9 +1,16 @@
 import Backtest from "./application/backtest/Backtest";
 
 (async function() {
-  // Backtest.chart("BTC_USDT");
-  // Backtest.chart("ETH_BTC");
-  // Backtest.chart("STR_USDT");
-  // Backtest.chart("FCT_BTC");
-  // Backtest.chart("BAT_ETH");
+  const watchList: string[] = [
+    "BTC_USDT",
+    "ETH_BTC",
+    "STR_USDT",
+    "FCT_BTC",
+    "BAT_ETH"
+  ];
+
+  const chartPromises = watchList.map(pair => {
+    Backtest.chart(pair);
+  });
+  Promise.all(chartPromises);
 })();

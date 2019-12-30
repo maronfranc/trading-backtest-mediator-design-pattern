@@ -1,4 +1,4 @@
-import { Strategy } from "../../../typescript";
+import { Strategy, Order } from "../../../typescript";
 import { ChartData } from "../../../typescript/ChartData";
 import SimpleMovingAverage from "../indicators/SimpleMovingAverage";
 import ExponentialMovingAverage from "../indicators/ExponentialMovingAverage";
@@ -16,11 +16,17 @@ class MAxEMAHandler implements Strategy<ChartData> {
     );
   }
 
-  public handle(index: string, chartData: ChartData): any {
+  public buyHandle(index: string, chartData: ChartData): Order {
     return {
       pair: index,
-      amount: chartData,
-      order: `Price closed above MA and EMA: Buy ${index}!`
+      order: { buy: true }
+    };
+  }
+
+  public sellHandle(index: string, chartData: ChartData): Order {
+    return {
+      pair: index,
+      order: { sell: true }
     };
   }
 }

@@ -1,5 +1,5 @@
 import Indicator from "./Indicator";
-import sumArrayOfNumbers from "../utils/sumArrayOfNumbers";
+import sumArrayOfNumbers from "../../utils/sumArrayOfNumbers";
 import exponentialMovingAverage from "../formulas/exponentialMovingAverage";
 
 export default class ExponentialMovingAverage extends Indicator {

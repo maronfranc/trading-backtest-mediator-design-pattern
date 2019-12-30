@@ -9,7 +9,8 @@ import { chartData } from "../../infrastructure/mock/chartData";
 import { tickerData } from "../../infrastructure/mock/tickerData";
 import { ChartData, TickerData } from "../../typescript";
 import ApiCaller, { t } from "../services/ApiCaller";
-import Portfolio from "../../domain/repositories/Portoflio";
+import Portfolio from "../../domain/repositories/Portfolio";
+import Trade from "../../domain/repositories/Trade";
 
 class Backtest {
   async chart(pair: string) {
@@ -19,14 +20,34 @@ class Backtest {
         pair,
         period: 14400
       });
-      // console.log("api: ", chart.data);
+
 
       Mediator.addHandler(MAxEMAHandler);
-      // Mediator.addHandler(MAHandler);
       this.proccessArrayOfObjects(pair, chart.data, Mediator);
     } catch (e) {
       console.log("Backtest Error: ", e);
     }
+  }
+
+  proccessArrayOfObjects(
+    pair: string,
+    chartData: ChartData[],
+    mediator: typeof Mediator
+  ) {
+    return chartData.forEach(data => {
+      const tradeReply = mediator.request(pair, data);
+
+      const trade = new Trade(Portfolio, pair);
+      const calculatedAmount = 115 // trade.calculateRisk();
+      if (tradeReply.order.buy) {
+        trade.buy(calculatedAmount, data.close)
+        console.log("Buy:", Portfolio);
+      } else if (tradeReply.order.sell) {
+        trade.sell(calculatedAmount, data.close)
+        console.log("Sell:", Portfolio);
+      }
+      return tradeReply;
+    });
   }
 
   ticker() {
@@ -40,22 +61,6 @@ class Backtest {
     } catch (e) {
       console.log("Backtest Error: ", e);
     }
-  }
-
-  proccessArrayOfObjects(
-    pair: string,
-    chartData: ChartData[],
-    mediator: typeof Mediator
-  ) {
-    return chartData.forEach(data => {
-      const tradeReply = mediator.request(pair, data);
-      console.log("Backtest proccess:", tradeReply);
-      if (tradeReply.amount) {
-        Portfolio.buy(pair, 115, data.close);
-        console.log("Portfolio:", Portfolio);
-      }
-      return tradeReply;
-    });
   }
 
   proccessObjectOfDictionaries(

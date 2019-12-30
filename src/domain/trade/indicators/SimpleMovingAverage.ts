@@ -1,5 +1,5 @@
 import Indicator from "./Indicator";
-import sumArrayOfNumbers from "../utils/sumArrayOfNumbers";
+import sumArrayOfNumbers from "../../utils/sumArrayOfNumbers";
 
 export default class SimpleMovingAverage extends Indicator {
   constructor(period: number) {

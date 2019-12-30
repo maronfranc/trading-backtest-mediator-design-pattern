@@ -1,14 +1,21 @@
-import { TickerData, Strategy } from "../../../typescript";
+import { TickerData, Strategy, Order } from "../../../typescript";
 
 class VolumeHandler implements Strategy<TickerData> {
   public canHandle(value: TickerData): boolean {
     return value.baseVolume > "9.7";
   }
 
-  public handle(index: string, value: TickerData): any {
+  public buyHandle(index: string, value: TickerData): Order {
     return {
       pair: index,
-      order: `Volume says: Buy ${index}!`
+      order: { buy: true }
+    };
+  }
+
+  public sellHandle(index: string, value: TickerData): Order {
+    return {
+      pair: index,
+      order: { sell: true }
     };
   }
 }

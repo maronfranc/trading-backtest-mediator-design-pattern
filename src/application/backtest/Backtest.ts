@@ -8,20 +8,22 @@ import {
 import { chartData } from "../../infrastructure/mock/chartData";
 import { tickerData } from "../../infrastructure/mock/tickerData";
 import { ChartData, TickerData } from "../../typescript";
-import ApiCaller from "../services/ApiCaller";
+import ApiCaller, { t } from "../services/ApiCaller";
 import Portfolio from "../../domain/repositories/Portoflio";
 
 class Backtest {
   async chart(pair: string) {
     try {
-      // const url =
-      //   `returnChartData&currencyPair=${pair}&start=1546300800&end=1546646400&period=14400`;
-      // const chart = await ApiCaller.getPoloniex<ChartData>(url);
+      const chart = await ApiCaller.getChart<ChartData>({
+        command: "returnChartData",
+        pair,
+        period: 14400
+      });
       // console.log("api: ", chart.data);
 
       Mediator.addHandler(MAxEMAHandler);
       // Mediator.addHandler(MAHandler);
-      this.proccessArrayOfObjects(pair, chartData, Mediator);
+      this.proccessArrayOfObjects(pair, chart.data, Mediator);
     } catch (e) {
       console.log("Backtest Error: ", e);
     }
@@ -29,8 +31,8 @@ class Backtest {
 
   ticker() {
     try {
-      // const ticker = await ApiCaller.getPoloniex<ChartData>("returnTicker");
-      // console.log(ticker.data)
+      // const picker = await ApiCaller.get<TickerData>("returnTicker")
+      // console.log(picker.data)
 
       Mediator.addHandler(PercentHandler);
       Mediator.addHandler(VolumeHandler);

@@ -1,6 +1,6 @@
 import { ChartData } from "../../typescript/ChartData";
 
-// Pair: USDT_ETH
+// Pair: USDT_BTC
 // https://poloniex.com/public?command=returnChartData&currencyPair=USDT_BTC&start=1546300800&end=1546646400&period=14400
 export const chartData: ChartData[] = [
   {

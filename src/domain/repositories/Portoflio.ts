@@ -24,6 +24,7 @@ class Portfolio {
   }
 
   private comfirmTrade({ toBuy, toSell, amount, price }: Trade) {
+    if (!this.currencies.get(toBuy)) this.currencies.set(toBuy, 0);
     const boughtAmount = amount / price;
     this.currencies.set(toBuy, this.currencies.get(toBuy)! + boughtAmount);
     this.currencies.set(toSell, this.currencies.get(toSell)! - amount);

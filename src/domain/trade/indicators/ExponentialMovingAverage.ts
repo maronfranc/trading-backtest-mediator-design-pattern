@@ -1,21 +1,13 @@
-export default class EMA {
-  public arrValues: number[] = [];
-  public value: number = 0;
+import Indicator from "./Indicator";
+import sumArrayOfNumbers from "../utils/sumArrayOfNumbers";
+import exponentialMovingAverage from "../formulas/exponentialMovingAverage";
 
-  constructor(public period: number) {}
-
-  push(n: number) {
-    if (this.arrValues.length > this.period - 1) {
-      this.arrValues.shift();
-    }
-    this.arrValues.push(n);
-    this.calcEMA();
+export default class ExponentialMovingAverage extends Indicator {
+  constructor(period: number) {
+    super(period);
   }
 
-  calcEMA() {
-    const sum = this.arrValues.reduce((acc: number, value: number): number => {
-      return acc + value;
-    }, 0);
-    this.value = sum / this.arrValues.length;
+  calc() {
+    this.indicator = exponentialMovingAverage(this.arrValues, this.period);
   }
 }

@@ -1,4 +1,4 @@
-import EMA from "./ExponentialMovingAverage";
-import MA from "./SimpleMovingAverage";
+import ExponentialMovingAverage from "./ExponentialMovingAverage";
+import SimpleMovingAverage from "./SimpleMovingAverage";
 
-export { EMA, MA };
+export { ExponentialMovingAverage, SimpleMovingAverage };

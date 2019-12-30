@@ -1,21 +1,13 @@
-export default class MA {
-  public arrValues: number[] = [];
-  public value: number = 0;
+import Indicator from "./Indicator";
+import sumArrayOfNumbers from "../utils/sumArrayOfNumbers";
 
-  constructor(public period: number) {}
-
-  push(n: number) {
-    if (this.arrValues.length > this.period - 1) {
-      this.arrValues.shift();
-    }
-    this.arrValues.push(n);
-    this.calcMA();
+export default class SimpleMovingAverage extends Indicator {
+  constructor(period: number) {
+    super(period);
   }
 
-  calcMA() {
-    const sum = this.arrValues.reduce((acc: number, value: number): number => {
-      return acc + value;
-    }, 0);
-    this.value = sum / this.arrValues.length;
+  calc() {
+    const sum = sumArrayOfNumbers(this.arrValues);
+    this.indicator = sum / this.arrValues.length;
   }
 }

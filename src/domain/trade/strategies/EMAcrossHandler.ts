@@ -1,21 +1,20 @@
 import { Strategy, Order } from "../../../typescript";
 import { ChartData } from "../../../typescript/ChartData";
-import SimpleMovingAverage from "../indicators/SimpleMovingAverage";
 import ExponentialMovingAverage from "../indicators/ExponentialMovingAverage";
 
-class MAxEMAHandler implements Strategy<ChartData> {
-  public MAData = new SimpleMovingAverage(23);
-  public EMAData = new ExponentialMovingAverage(9);
+class EMAcrossHandler implements Strategy<ChartData> {
+  public EMA20 = new ExponentialMovingAverage(20);
+  public EMA50 = new ExponentialMovingAverage(50);
+
   /**
    * Ponto inicial para os metodos buyHandle e sellHandle, se false
    * eles não serão executados dentro do Mediator.request
    */
   public canHandle(chartData: ChartData): boolean {
-    this.MAData.push(chartData.close);
-    this.EMAData.push(chartData.close);
+    this.EMA20.push(chartData.close);
+    this.EMA50.push(chartData.close);
     return (
-      chartData.close > this.MAData.indicator &&
-      chartData.close > this.EMAData.indicator
+       this.EMA20.indicator > this.EMA50.indicator
     );
   }
 
@@ -34,4 +33,4 @@ class MAxEMAHandler implements Strategy<ChartData> {
   }
 }
 
-export default new MAxEMAHandler();
+export default new EMAcrossHandler();

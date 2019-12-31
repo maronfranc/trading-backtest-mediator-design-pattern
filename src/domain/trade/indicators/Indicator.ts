@@ -1,3 +1,7 @@
+/**
+ * Classe abstrata que guarda um vetor com o tamanho 
+ * máximo igual ao this.period.
+ */
 export default abstract class Indicator {
   protected arrValues: number[];
   public indicator: number;
@@ -7,6 +11,10 @@ export default abstract class Indicator {
     this.indicator = 0;
   }
 
+  /**
+   * Executa um push dentro do vetor de números e os calcula de acordo
+   * com a equação do indicador e põe dentro do this.indicator.
+   */
   push(n: number) {
     if (this.arrValues.length > this.period - 1) {
       this.arrValues.shift();

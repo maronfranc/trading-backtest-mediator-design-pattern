@@ -1,6 +1,6 @@
 import PercentHandler from "./PercentHandler";
-import VolumeHandler from "./VolumeHandler";
 import MAHandler from "./MAHandler";
 import MAxEMAHandler from "./MAxEMAHandler";
+import EMAcrossHandler from "./EMAcrossHandler";
 
-export { PercentHandler, VolumeHandler, MAHandler, MAxEMAHandler };
+export { PercentHandler, MAHandler, MAxEMAHandler, EMAcrossHandler };

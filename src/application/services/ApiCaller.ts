@@ -1,18 +1,15 @@
 import axios, { AxiosInstance } from "axios";
 
 class ApiCaller {
-  async getChart<Data>(
-    {
-      command,
-      pair,
-      period
-    }: {
-      command: commandTypes;
-      pair: string;
-      period: PeriodTypes;
-    } // : Promise<{ // data: Data;
-  ) // }>
-  {
+  async getChartData({
+    command,
+    pair,
+    period
+  }: {
+    command: commandNames;
+    pair: string;
+    period: AcceptedPeriod;
+  }): Promise<any> {
     const host = "https://poloniex.com/public?";
     const now = new Date().getTime();
     const normalizedPair = `currencyPair=${pair.split("_")[1]}_${
@@ -41,14 +38,5 @@ class ApiCaller {
 }
 export default new ApiCaller();
 
-export type commandTypes = "returnTicker" | "returnChartData";
-type PeriodTypes = 300 | 900 | 1800 | 7200 | 14400 | 86400;
-
-export const t: Record<string, PeriodTypes> = {
-  minutes5: 300,
-  minutes15: 900,
-  minutes30: 1800,
-  hours2: 7200,
-  hours4: 14400,
-  day: 86400
-};
+export type commandNames = "returnTicker" | "returnChartData";
+type AcceptedPeriod = 300 | 900 | 1800 | 7200 | 14400 | 86400;

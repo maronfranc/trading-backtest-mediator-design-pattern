@@ -33,7 +33,7 @@ class Trade {
     });
   }
 
-  public validate({ toBuy, toSell, buyAmount, sellAmount }: TradeData) {
+  private validate({ toBuy, toSell, buyAmount, sellAmount }: TradeData) {
     this.notUndefinedCurrencies();
 
     if (this.portfolio.currencies.get(toSell) === 0) {
@@ -54,9 +54,9 @@ class Trade {
   }
 
   private notUndefinedCurrencies() {
-    if (!this.portfolio.currencies.get(this.currencyName.main))
+    if (!this.portfolio.currencies.has(this.currencyName.main))
       this.portfolio.currencies.set(this.currencyName.main, 0);
-    if (!this.portfolio.currencies.get(this.currencyName.secondary))
+    if (!this.portfolio.currencies.has(this.currencyName.secondary))
       this.portfolio.currencies.set(this.currencyName.secondary, 0);
   }
 }

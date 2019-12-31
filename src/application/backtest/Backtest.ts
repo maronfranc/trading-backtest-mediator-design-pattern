@@ -1,29 +1,29 @@
 import Mediator from "../../domain/trade/Mediator";
 import {
   MAxEMAHandler,
-  VolumeHandler,
   PercentHandler,
-  MAHandler
+  MAHandler,
+  EMAcrossHandler
 } from "../../domain/trade/strategies";
 import { chartData } from "../../infrastructure/mock/chartData";
 import { tickerData } from "../../infrastructure/mock/tickerData";
 import { ChartData, TickerData } from "../../typescript";
-import ApiCaller, { t } from "../services/ApiCaller";
+import ApiCaller from "../services/ApiCaller";
 import Portfolio from "../../domain/repositories/Portfolio";
 import Trade from "../../domain/repositories/Trade";
 
 class Backtest {
   async chart(pair: string) {
     try {
-      const chart = await ApiCaller.getChart<ChartData>({
+      const chart = await ApiCaller.getChartData({
         command: "returnChartData",
         pair,
         period: 14400
       });
-
-
-      Mediator.addHandler(MAxEMAHandler);
+      Mediator.addStrategy(EMAcrossHandler);
+      Mediator.addStrategy(MAxEMAHandler);
       this.proccessArrayOfObjects(pair, chart.data, Mediator);
+      console.log("Portfolio: ", Portfolio.currencies);
     } catch (e) {
       console.log("Backtest Error: ", e);
     }
@@ -36,27 +36,23 @@ class Backtest {
   ) {
     return chartData.forEach(data => {
       const tradeReply = mediator.request(pair, data);
+      const calculatedAmount = 115; // trade.calculateRisk();
 
       const trade = new Trade(Portfolio, pair);
-      const calculatedAmount = 115 // trade.calculateRisk();
       if (tradeReply.order.buy) {
-        trade.buy(calculatedAmount, data.close)
-        console.log("Buy:", Portfolio);
+        trade.buy(calculatedAmount, data.close);
       } else if (tradeReply.order.sell) {
-        trade.sell(calculatedAmount, data.close)
-        console.log("Sell:", Portfolio);
+        trade.sell(calculatedAmount, data.close);
       }
       return tradeReply;
     });
   }
 
-  ticker() {
+  async ticker() {
     try {
-      // const picker = await ApiCaller.get<TickerData>("returnTicker")
-      // console.log(picker.data)
-
-      Mediator.addHandler(PercentHandler);
-      Mediator.addHandler(VolumeHandler);
+      // const ticker = await ApiCaller.getTicker();
+      // console.log(ticker.data);
+      Mediator.addStrategy(PercentHandler);
       this.proccessObjectOfDictionaries(tickerData, Mediator);
     } catch (e) {
       console.log("Backtest Error: ", e);

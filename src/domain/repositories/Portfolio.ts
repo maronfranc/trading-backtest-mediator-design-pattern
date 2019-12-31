@@ -1,7 +1,7 @@
 import { TradeData } from "./Trade";
 
 class Portfolio {
-  public currencies: Map<string, number> = new Map();
+  currencies: Map<string, number> = new Map();
   constructor() {
     this.getCurrencies();
   }
@@ -9,10 +9,10 @@ class Portfolio {
   /**
    * confirmTrade é executado pelo Trade.ts depois de suas validações.
    */
-  public confirmTrade({ toBuy, toSell, buyAmount, sellAmount }: TradeData) {
+  confirmTrade({ toBuy, toSell, buyAmount, sellAmount }: TradeData) {
     this.currencies.set(toBuy, this.currencies.get(toBuy)! + buyAmount);
     this.currencies.set(toSell, this.currencies.get(toSell)! - sellAmount);
-    console.log({ traded: `${toSell}:${sellAmount}-${toBuy}:${buyAmount}.` });
+    console.log({ traded: `${toSell}:${sellAmount} for ${toBuy}:${buyAmount}.` });
   }
 
   /**

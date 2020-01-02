@@ -1,72 +1,71 @@
-import Mediator from "../../domain/trade/Mediator";
+import Portfolio from "../../infrastructure/repositories/Portfolio";
+import Csv from "../../infrastructure/csvFile/CsvFile";
+import { chartData } from "../../infrastructure/mock/chartData";
+import { tickerData } from "../../infrastructure/mock/tickerData";
+import TradeMediator from "../../domain/TradeMediator";
 import {
   MAxEMAHandler,
   PercentHandler,
   MAHandler,
   EMAcrossHandler
 } from "../../domain/trade/strategies";
-import { chartData } from "../../infrastructure/mock/chartData";
-import { tickerData } from "../../infrastructure/mock/tickerData";
+import Trade from "../../domain/trade/Trade";
 import { ChartData, TickerData } from "../../typescript";
-import ApiCaller from "../services/ApiCaller";
-import Portfolio from "../../domain/repositories/Portfolio";
-import Trade from "../../domain/repositories/Trade";
+import ApiCaller from "../../infrastructure/http/ApiCaller";
 
 class Backtest {
-  async chart(pair: string) {
-    try {
-      const chart = await ApiCaller.getChartData({
-        command: "returnChartData",
-        pair,
-        period: 14400
-      });
-      Mediator.addStrategy(EMAcrossHandler);
-      Mediator.addStrategy(MAxEMAHandler);
-      this.proccessArrayOfObjects(pair, chart.data, Mediator);
-      console.log("Portfolio: ", Portfolio.currencies);
-    } catch (e) {
-      console.log("Backtest Error: ", e);
-    }
-  }
+  // async chart(pair: string) {
+  //   try {
+  //     TradeMediator.addStrategy(MAxEMAHandler);
+  //     TradeMediator.addStrategy(EMAcrossHandler);
+  //     const chart = await ApiCaller.getChartData({
+  //       command: "returnChartData",
+  //       pair,
+  //       period: 14400
+  //     });
+  //     this.proccessArrayOfObjects(pair, chart.data, TradeMediator);
+  //     // this.proccessArrayOfObjects(pair, chartData, TradeMediator);
+  //     console.log("Portfolio: ", Portfolio.currencies);
+  //   } catch (e) {
+  //     console.log("Backtest Error: ", e);
+  //   }
+  // }
 
-  proccessArrayOfObjects(
-    pair: string,
-    chartData: ChartData[],
-    mediator: typeof Mediator
-  ) {
-    return chartData.forEach(data => {
-      const tradeReply = mediator.request(pair, data);
-      const calculatedAmount = 115; // trade.calculateRisk();
+  // proccessArrayOfObjects(
+  //   pair: string,
+  //   chartData: ChartData[],
+  //   mediator: typeof TradeMediator
+  // ) {
+  //   const trade = new Trade(Portfolio, pair);
+  //   return chartData.forEach(data => {
+  //     const tradeReply = mediator.request(pair, data);
 
-      const trade = new Trade(Portfolio, pair);
-      if (tradeReply.order.buy) {
-        trade.buy(calculatedAmount, data.close);
-      } else if (tradeReply.order.sell) {
-        trade.sell(calculatedAmount, data.close);
-      }
-      return tradeReply;
-    });
-  }
+  //     if (tradeReply.order.buy) trade.buy(data.close);
+  //     else if (tradeReply.order.sell) trade.sell(data.close);
+  //   });
+  // }
 
   async ticker() {
     try {
-      // const ticker = await ApiCaller.getTicker();
-      // console.log(ticker.data);
-      Mediator.addStrategy(PercentHandler);
-      this.proccessObjectOfDictionaries(tickerData, Mediator);
+      TradeMediator.addStrategy(PercentHandler);
+      
+      await Portfolio.asyncConstructor();
+      await this.proccessObjectOfDictionary();
+
+      new Csv("portfolio").savePortfolio(Portfolio.currencies);
     } catch (e) {
-      console.log("Backtest Error: ", e);
+      console.log("Backtest catch: ", e);
     }
   }
 
-  proccessObjectOfDictionaries(
-    data: Record<string, TickerData>,
-    mediator: typeof Mediator
-  ) {
-    return Object.entries(data).forEach(([index, values]) => {
-      const tradeReply = mediator.request(index, values);
-      console.log("Backtest proccess:", tradeReply);
-      return tradeReply;
+  async proccessObjectOfDictionary() {
+    const ticker: {data: Record<string, TickerData>} = await ApiCaller.getTicker();
+    return Object.entries(ticker.data).forEach(([pair, data]) => {
+      const normalizedPair = pair.split("_")[1] + "_" + pair.split("_")[0];
+      const trade = new Trade(Portfolio, normalizedPair);
+      const tradeReply = TradeMediator.request(normalizedPair, data);
+      if (tradeReply.order.buy) trade.buy(+data.highestBid);
+      else if (tradeReply.order.sell) trade.sell(+data.lowestAsk);
     });
   }
 }

@@ -28,6 +28,7 @@ class ApiCaller {
 
   async getTicker() {
     const url = `https://poloniex.com/public?command=returnTicker`;
+    console.log(url)
     try {
       const response = await axios.get(url);
       return response as any;

@@ -1,15 +1,15 @@
-import { Strategy } from "../../typescript";
+import { Strategy } from "../typescript";
 
-class Mediator {
+class TradeMediator {
   constructor(private handlers: Strategy<any>[] = []) {}
 
   /**
    * Adiciona uma estratégia na lista que vão ser executadas;
    * As estratégias adicionadas têm prioridade das primeiras pras ultimas
    * @example
-   * Mediator.addStrategy(EMAcrossHandler); // false
-   * Mediator.addStrategy(MAxEMAHandler);   // true : é executada
-   * Mediator.addStrategy(MAHandler);       // true : não é executada
+   * TradeMediator.addStrategy(EMAcrossHandler); // false
+   * TradeMediator.addStrategy(MAxEMAHandler);   // true : é executada
+   * TradeMediator.addStrategy(MAHandler);       // true : não é executada
    * @see 
    * https://jarrettmeyer.com/2016/04/21/mediator-pattern-in-javascript
    */
@@ -48,4 +48,4 @@ class Mediator {
     );
   }
 }
-export default new Mediator();
+export default new TradeMediator();

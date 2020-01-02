@@ -1,8 +1,9 @@
+import Portfolio from "../../infrastructure/repositories/Portfolio";
 
 class Trade {
   private currencyName: Record<CurrencyPair, string>;
   constructor(
-    private portfolio: any,
+    private portfolio: typeof Portfolio,
     private pair: string,
     // private price: number,
     private fee: number = 0
@@ -13,7 +14,11 @@ class Trade {
     };
   }
 
-  buy(amount: number, price: number) {
+  buy(price: number) {
+    this.notUndefinedCurrencies();
+    const amount = this.calculateRisk(
+      this.portfolio.currencies.get(this.currencyName.secondary)!
+    );
     const buyAmount = amount / price;
     this.validate({
       toBuy: this.currencyName.main,
@@ -23,14 +28,23 @@ class Trade {
     });
   }
 
-  sell(amount: number, price: number) {
+  sell(price: number) {
+    this.notUndefinedCurrencies();
+    const amount = this.calculateRisk(
+      this.portfolio.currencies.get(this.currencyName.main)!
+    );
+
     const sellAmount = amount / price;
     this.validate({
       toBuy: this.currencyName.secondary,
-      buyAmount: amount,
       toSell: this.currencyName.main,
+      buyAmount: amount,
       sellAmount
     });
+  }
+
+  calculateRisk(amount: number, percentage: number = 0.03): number {
+    return amount * percentage;
   }
 
   private validate({ toBuy, toSell, buyAmount, sellAmount }: TradeData) {
@@ -63,13 +77,12 @@ class Trade {
 
 export default Trade;
 
-
 type CurrencyPair = "main" | "secondary";
 
 export interface TradeData {
   toBuy: string;
   buyAmount: number;
-  sellAmount: number;
   toSell: string;
+  sellAmount: number;
   fee?: number;
 }

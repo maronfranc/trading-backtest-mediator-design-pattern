@@ -1,4 +1,9 @@
 export interface Order {
   pair: string;
-  order: { buy?: boolean; sell?: boolean };
+  price: number;
+  buy: boolean;
+  sell: boolean;
+  takeProfit?: boolean;
+  stopLimit?: boolean;
+  error?: string;
 }

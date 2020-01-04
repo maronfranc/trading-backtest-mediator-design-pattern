@@ -1,7 +1,7 @@
-import { Strategy } from "../typescript";
+import { Order } from "../typescript/Order";
 
 class TradeMediator {
-  constructor(private handlers: Strategy<any>[] = []) {}
+  constructor(private handlers: any[] = []) {}
 
   /**
    * Adiciona uma estratégia na lista que vão ser executadas;
@@ -10,10 +10,10 @@ class TradeMediator {
    * TradeMediator.addStrategy(EMAcrossHandler); // false
    * TradeMediator.addStrategy(MAxEMAHandler);   // true : é executada
    * TradeMediator.addStrategy(MAHandler);       // true : não é executada
-   * @see 
+   * @see
    * https://jarrettmeyer.com/2016/04/21/mediator-pattern-in-javascript
    */
-  addStrategy(handler: Strategy<any>) {
+  addStrategy(handler: any) {
     if (this.isValidHandler(handler)) {
       this.handlers.push(handler);
       return this;
@@ -28,23 +28,28 @@ class TradeMediator {
   /**
    * Executa as funções de todas as estratégias que foram adicionadas.
    */
-  request(index: string, value: any) {
+  request(pair: string, value: any): Order {
     for (let i = 0; i < this.handlers.length; i++) {
-      let handler: Strategy<any> = this.handlers[i];
-      if (handler.canHandle(value)) {
-        return handler.buyHandle(index, value);
-      } else {
-        return handler.sellHandle(index, value);
+      let handler: any = this.handlers[i];
+      if (handler.canHandle(value, handler.conditionTo)) {
+        return handler.actionHandle(pair);
       }
     }
-    return { pair: index, error: "Mediator was unable to satisfy request." };
+    return {
+      pair,
+      price: NaN,
+      buy: false,
+      sell: false,
+      takeProfit: false,
+      stopLimit: false,
+      error: "Mediator was unable to satisfy request."
+    };
   }
 
-  private isValidHandler(handler: Strategy<any>) {
+  private isValidHandler(handler: any) {
     return (
       typeof handler.canHandle === "function" &&
-      typeof handler.buyHandle === "function" &&
-      typeof handler.sellHandle === "function"
+      typeof handler.actionHandle === "function"
     );
   }
 }

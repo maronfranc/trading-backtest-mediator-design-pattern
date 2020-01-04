@@ -1,5 +1,5 @@
 import { TradeData } from "../../domain/trade/Trade";
-import CSVFile from "../csvFile/CsvFile";
+import CSVFile from "../csv/CsvFile";
 
 class Portfolio {
   currencies!: Map<string, number>;

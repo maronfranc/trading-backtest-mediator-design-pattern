@@ -12,6 +12,11 @@ import {
   PercentHandler
 } from "../../domain/trade/strategies";
 
+const fileName = {
+  chartData: "Chart Data Portfolio",
+  ticker: "Ticker Portfolio"
+};
+
 class Backtest {
   async chart(pair: string) {
     try {
@@ -22,12 +27,12 @@ class Backtest {
       //   pair,
       //   period: 14400
       // });
-      // await Portfolio.asyncConstructor();
+      await Portfolio.asyncConstructor(fileName.chartData);
 
       // this.proccessArrayOfObjects(pair, chart.data, TradeMediator);
       this.proccessArrayOfObjects(pair, chartData, TradeMediator);
 
-      new Csv("portfolio").savePortfolio(Portfolio.currencies);
+      new Csv(fileName.chartData).savePortfolio(Portfolio.currencies);
     } catch (e) {
       console.log("Backtest Error: ", e);
     }
@@ -51,10 +56,10 @@ class Backtest {
     try {
       TradeMediator.addStrategy(PercentHandler);
 
-      await Portfolio.asyncConstructor();
+      await Portfolio.asyncConstructor(fileName.ticker);
       await this.proccessObjectOfDictionary();
 
-      new Csv("portfolio").savePortfolio(Portfolio.currencies);
+      new Csv(fileName.ticker).savePortfolio(Portfolio.currencies);
     } catch (e) {
       console.log("Backtest catch: ", e);
     }
@@ -68,14 +73,12 @@ class Backtest {
       const normalizedPair = normalizePair(pair);
       const trade = new Trade(Portfolio, normalizedPair);
       const tradeReply = TradeMediator.request(normalizedPair, data);
+      // console.info("tradeReply:", tradeReply)
+      if (tradeReply.sell) console.log("ASDHOWEPQIWDNOIUOSHDJK")
       if (tradeReply.buy) trade.buy(+data.highestBid);
-      else if (tradeReply.takeProfit) {
-        console.error(`PROFIT bid:${data.highestBid}, pair:${normalizedPair}`);
-        trade.buy(+data.highestBid);
-      } else if (tradeReply.stopLimit) {
-        console.log(`STOP ask:${data.lowestAsk}, pair:${normalizedPair}`);
-        trade.sell(+data.lowestAsk);
-      } else if (tradeReply.sell) trade.sell(+data.lowestAsk);
+      else if (tradeReply.takeProfit) trade.buy(+data.highestBid);
+      else if (tradeReply.stopLimit) trade.sell(+data.lowestAsk);
+      else if (tradeReply.sell) trade.sell(+data.lowestAsk);
     });
   }
 }

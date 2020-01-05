@@ -15,7 +15,7 @@ export default abstract class Indicator {
    * Executa um push dentro do vetor de números e os calcula de acordo
    * com a equação do indicador e põe dentro do this.indicator.
    */
-  push(n: number) {
+  pushData(n: number) {
     if (this.arrValues.length > this.period - 1) {
       this.arrValues.shift();
     }
@@ -23,5 +23,9 @@ export default abstract class Indicator {
     this.calc();
   }
 
+  /**
+   * Roda toda vez que um valor é adicionado usando 
+   * Indicator.pushData(number)
+   */
   abstract calc(): void;
 }

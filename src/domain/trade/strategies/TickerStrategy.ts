@@ -1,10 +1,10 @@
-import { TickerData } from "../../../../typescript";
-import { riskReward } from "../../formulas/riskReward";
-import { Order } from "../../../../typescript/Order";
+import { TickerData } from "../../../typescript";
+import { riskReward } from "../formulas/riskReward";
+import { Order } from "../../../typescript/Order";
 import {
   actionTypes,
   ConditionToAction
-} from "../../../../typescript/ConditionToAction";
+} from "../../../typescript/ConditionToAction";
 
 export abstract class TickerStrategy {
   protected action: actionTypes = "NONE";

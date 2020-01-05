@@ -1,10 +1,10 @@
-import { ChartData } from "../../../../typescript";
-import { riskReward } from "../../formulas/riskReward";
-import { Order } from "../../../../typescript/Order";
+import { ChartData } from "../../../typescript";
+import { riskReward } from "../formulas/riskReward";
+import { Order } from "../../../typescript/Order";
 import {
   actionTypes,
   ConditionToAction
-} from "../../../../typescript/ConditionToAction";
+} from "../../../typescript/ConditionToAction";
 
 export abstract class ChartDataStrategy {
   protected action: actionTypes = "NONE";
@@ -19,21 +19,25 @@ export abstract class ChartDataStrategy {
     value: ChartData,
     conditionToAction: ConditionToAction<ChartData>
   ): boolean {
+    this.updateIndicators(value);
+
     if (conditionToAction.buy(value)) {
       this.setOrderAt = +value.high;
       [this.stop, this.target] = riskReward(value.high);
-      this.action = "BUY";
 
+      this.action = "BUY";
       if (conditionToAction.stopLimit(value)) this.action = "STOP_LIMIT";
       else if (conditionToAction.takeProfit(value)) this.action = "TAKE_PROFIT";
+
       return true;
     } else if (conditionToAction.sell(value)) {
       this.setOrderAt = +value.low;
       [this.target, this.stop] = riskReward(this.setOrderAt);
-      this.action = "SELL";
 
+      this.action = "SELL";
       if (conditionToAction.stopLimit(value)) this.action = "STOP_LIMIT";
       else if (conditionToAction.takeProfit(value)) this.action = "TAKE_PROFIT";
+
       return true;
     } else return false;
   }
@@ -49,5 +53,6 @@ export abstract class ChartDataStrategy {
     };
   }
 
-  abstract conditionTo: ConditionToAction<ChartData>;
+  protected abstract conditionTo: ConditionToAction<ChartData>;
+  protected abstract updateIndicators(data: ChartData): void;
 }

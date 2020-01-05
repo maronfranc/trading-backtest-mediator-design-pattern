@@ -1,6 +1,6 @@
 import { ChartData } from "../../../../typescript/ChartData";
 import ExponentialMovingAverage from "../../indicators/ExponentialMovingAverage";
-import { ChartDataStrategy } from "./ChartDataStrategy";
+import { ChartDataStrategy } from "../ChartDataStrategy";
 
 class EMAcrossHandler extends ChartDataStrategy {
   public EMA20 = new ExponentialMovingAverage(20);
@@ -12,6 +12,11 @@ class EMAcrossHandler extends ChartDataStrategy {
     takeProfit: (value: ChartData) => +value.high >= this.target,
     stopLimit: (value: ChartData) => +value.low <= this.stop
   };
+
+  updateIndicators(value: ChartData) {
+    this.EMA20.pushData(value.close);
+    this.EMA50.pushData(value.close);
+  }
 }
 
 export default new EMAcrossHandler();

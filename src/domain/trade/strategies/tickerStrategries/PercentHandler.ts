@@ -1,5 +1,5 @@
 import { TickerData, Strategy, Order } from "../../../../typescript";
-import { TickerStrategy } from "./TickerStrategy";
+import { TickerStrategy } from "../TickerStrategy";
 
 class PercentHandler extends TickerStrategy {
   conditionTo = {

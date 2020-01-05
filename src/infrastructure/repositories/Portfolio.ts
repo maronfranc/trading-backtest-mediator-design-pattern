@@ -4,10 +4,8 @@ import CSVFile from "../csv/CsvFile";
 class Portfolio {
   currencies!: Map<string, number>;
   private portfolioFile!: CSVFile;
-  constructor(fileName = "portfolio") {
+  async asyncConstructor(fileName = "portfolio"): Promise<void> {
     this.portfolioFile = new CSVFile(fileName);
-  }
-  async asyncConstructor(): Promise<void> {
     await this.getCurrencies();
   }
 

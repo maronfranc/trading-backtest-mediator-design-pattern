@@ -22,15 +22,14 @@ class Backtest {
     try {
       TradeMediator.addStrategy(EMAcrossHandler);
       TradeMediator.addStrategy(MAHandler);
-      // const chart = await ApiCaller.getChartData({
-      //   command: "returnChartData",
-      //   pair,
-      //   period: 14400
-      // });
+      const chart = await ApiCaller.getChartData({
+        command: "returnChartData",
+        pair,
+        period: 14400
+      });
       await Portfolio.asyncConstructor(fileName.chartData);
 
-      // this.proccessArrayOfObjects(pair, chart.data, TradeMediator);
-      this.proccessArrayOfObjects(pair, chartData, TradeMediator);
+      this.proccessArrayOfObjects(pair, chart.data, TradeMediator);
 
       new Csv(fileName.chartData).savePortfolio(Portfolio.currencies);
     } catch (e) {
@@ -66,15 +65,14 @@ class Backtest {
   }
 
   async proccessObjectOfDictionary() {
-    // const ticker: {
-    //   data: Record<string, TickerData>;
-    // } = await ApiCaller.getTicker();
-    return Object.entries(tickerData).forEach(([pair, data]) => {
+    const ticker: {
+      data: Record<string, TickerData>;
+    } = await ApiCaller.getTicker();
+    return Object.entries(ticker.data).forEach(([pair, data]) => {
       const normalizedPair = normalizePair(pair);
       const trade = new Trade(Portfolio, normalizedPair);
       const tradeReply = TradeMediator.request(normalizedPair, data);
       // console.info("tradeReply:", tradeReply)
-      if (tradeReply.sell) console.log("ASDHOWEPQIWDNOIUOSHDJK")
       if (tradeReply.buy) trade.buy(+data.highestBid);
       else if (tradeReply.takeProfit) trade.buy(+data.highestBid);
       else if (tradeReply.stopLimit) trade.sell(+data.lowestAsk);

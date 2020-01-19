@@ -33,7 +33,6 @@ class Trade {
     const amount = this.calculateRisk(
       this.portfolio.currencies.get(this.currencyName.main)!
     );
-
     const sellAmount = amount / price;
     this.validate({
       toBuy: this.currencyName.secondary,
@@ -51,12 +50,14 @@ class Trade {
     this.notUndefinedCurrencies();
 
     if (this.portfolio.currencies.get(toSell) === 0) {
-      // Valor zerado
+      // console.info("// Valor zerado")
     } else if (this.portfolio.currencies.get(toSell)! - sellAmount > 0) {
-      // Procede normalmente
+      // console.log(toBuy, toSell,)
+      // console.info("// Procede normalmente")
       this.portfolio.confirmTrade({ toBuy, toSell, sellAmount, buyAmount });
     } else {
-      // Compra pra zerar
+      // console.log(toBuy, toSell,)
+      // console.info("// Compra pra zerar")
       const remainingAmount = this.portfolio.currencies.get(toSell)!;
       this.portfolio.confirmTrade({
         toBuy,

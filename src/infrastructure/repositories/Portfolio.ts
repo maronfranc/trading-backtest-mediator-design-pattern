@@ -16,7 +16,7 @@ class Portfolio {
     this.currencies
       .set(toBuy, this.currencies.get(toBuy)! + buyAmount)
       .set(toSell, this.currencies.get(toSell)! - sellAmount);
-    console.log({
+    console.info({
       traded: `${toSell}:${sellAmount} for ${toBuy}:${buyAmount}.`
     });
   }
@@ -24,15 +24,15 @@ class Portfolio {
   /**
    * Busca valores dentro do arquivo `__dirname/csv/${fileName}.csv`.
    */
-  private async getCurrencies(): Promise<any> {
+  private async getCurrencies(): Promise<void> {
     try {
       this.currencies = new Map(await this.portfolioFile.getPortfolio());
     } catch (e) {
-      console.log("-----------------------------");
-      console.log("Erro na Busca do arquivo .csv");
-      console.log("Adicionado 100 USDT como valor de teste");
+      console.info("-----------------------------");
+      console.info("Erro na Busca do arquivo .csv");
+      console.info("Adicionado 100 USDT como valor de teste");
       this.currencies = new Map();
-      return this.currencies.set("USDT", 100);
+      this.currencies.set("USDT", 100);
     }
   }
 

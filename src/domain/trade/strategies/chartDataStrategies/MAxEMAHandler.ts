@@ -19,6 +19,9 @@ class MAxEMAHandler extends ChartDataStrategy {
     stopLimit: (value: ChartData) => +value.low <= this.stop
   };
 
+  /**
+   * Recebe o valor de dentro do ChartDataStrategy.canHandle.
+   */
   updateIndicators(value: ChartData) {
     this.MAData.pushData(value.close);
     this.EMAData.pushData(value.close);

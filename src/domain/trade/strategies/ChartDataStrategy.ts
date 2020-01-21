@@ -12,13 +12,14 @@ export abstract class ChartDataStrategy {
   protected stop: number = NaN;
   protected target: number = NaN;
   /**
-   * Ponto inicial para os metodo actionHandle, se false
+   * Ponto inicial para os metodos actionHandle, se false
    * ele não será executado dentro do TradeMediator.request
    */
   canHandle(
     value: ChartData,
     conditionToAction: ConditionToAction<ChartData>
   ): boolean {
+    // Passa os dados para todos os indicadores dentro da classe filha
     this.updateIndicators(value);
 
     if (conditionToAction.buy(value)) {

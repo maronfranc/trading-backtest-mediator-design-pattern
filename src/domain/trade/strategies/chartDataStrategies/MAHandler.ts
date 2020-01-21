@@ -12,6 +12,9 @@ class MAHandler extends ChartDataStrategy {
     stopLimit: (value: ChartData) => +value.low <= this.stop
   };
 
+  /**
+   * Recebe o valor de dentro do ChartDataStrategy.canHandle.
+   */
   updateIndicators(data: ChartData) {
     this.MAData.pushData(data.close);
   }

@@ -11,8 +11,9 @@ export abstract class TickerStrategy {
   protected setOrderAt: number = NaN;
   protected stop: number = NaN;
   protected target: number = NaN;
+  protected abstract conditionTo: ConditionToAction<TickerData>;
   /**
-   * Ponto inicial para os metodo actionHandle, se false
+   * Ponto inicial para os metodos actionHandle, se false
    * ele não será executado dentro do TradeMediator.request
    */
   canHandle(
@@ -49,5 +50,4 @@ export abstract class TickerStrategy {
     };
   }
 
-  abstract conditionTo: ConditionToAction<TickerData>;
 }

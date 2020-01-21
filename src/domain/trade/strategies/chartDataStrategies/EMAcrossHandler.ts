@@ -13,6 +13,9 @@ class EMAcrossHandler extends ChartDataStrategy {
     stopLimit: (value: ChartData) => +value.low <= this.stop
   };
 
+  /**
+   * Recebe o valor de dentro do ChartDataStrategy.canHandle.
+   */
   updateIndicators(value: ChartData) {
     this.EMA20.pushData(value.close);
     this.EMA50.pushData(value.close);

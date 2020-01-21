@@ -1,5 +1,7 @@
+import { ChartData } from "../../../typescript";
+
 /**
- * Classe abstrata que guarda um vetor com o tamanho 
+ * Classe abstrata que guarda um vetor com o tamanho
  * máximo igual ao this.period.
  */
 export default abstract class Indicator {
@@ -15,17 +17,17 @@ export default abstract class Indicator {
    * Executa um push dentro do vetor de números e os calcula de acordo
    * com a equação do indicador e põe dentro do this.indicator.
    */
-  pushData(n: number) {
+  pushData(n: number, chartData: ChartData | null = null) {
     if (this.arrValues.length > this.period - 1) {
       this.arrValues.shift();
     }
     this.arrValues.push(n);
-    this.calc();
+    this.calc(chartData);
   }
 
   /**
-   * Roda toda vez que um valor é adicionado usando 
+   * Roda toda vez que um valor é adicionado usando
    * Indicator.pushData(number)
    */
-  abstract calc(): void;
+  protected abstract calc(chartData: ChartData | null): void;
 }

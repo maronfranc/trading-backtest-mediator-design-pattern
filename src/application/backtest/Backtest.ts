@@ -21,7 +21,6 @@ class Backtest {
   async chart(pair: string) {
     try {
       TradeMediator.addStrategy(EMAcrossHandler);
-      TradeMediator.addStrategy(MAHandler);
       const chart = await ApiCaller.getChartData({
         command: "returnChartData",
         pair,

@@ -1,12 +1,8 @@
-import Backtest from "./application/backtest/Backtest";
+import ChartDataBacktest from "./application/backtest/ChartDataBacktest";
+import TickerBacktest from "./application/backtest/TickerBacktest";
 
-const watchList: string[] = ["BTC_USDT"];
+const tickerBackTest = new TickerBacktest();
+tickerBackTest.ticker();
 
-(async function() {
-  Backtest.ticker();
-  
-  // FIXME: Loop deve acontecer levando em conta o timestamp
-  // watchList.forEach(async pair => {
-  //   await Backtest.chart(pair);
-  // });
-})();
+// const chartDataBacktest = new ChartDataBacktest();
+// chartDataBacktest.chart("BTC_USDT");

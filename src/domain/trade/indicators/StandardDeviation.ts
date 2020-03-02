@@ -1,7 +1,8 @@
 import Indicator from "./Indicator";
+
 import { average } from "../formulas/average";
 
-export default class StandarDeviation extends Indicator {
+export default class StandarDeviation extends Indicator<number> {
   constructor(period: number) {
     super(period);
   }

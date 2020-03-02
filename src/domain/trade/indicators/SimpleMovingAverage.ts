@@ -1,8 +1,8 @@
 import Indicator from "./Indicator";
-import sumArrayOfNumbers from "../../../utils/sumArrayOfNumbers";
+
 import { average } from "../formulas/average";
 
-export default class SimpleMovingAverage extends Indicator {
+export default class SimpleMovingAverage extends Indicator<number> {
   constructor(period: number) {
     super(period);
   }

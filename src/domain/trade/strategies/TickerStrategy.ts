@@ -1,10 +1,11 @@
-import { TickerData } from "../../../typescript";
 import { riskReward } from "../formulas/riskReward";
-import { Order } from "../../../typescript/Order";
+
 import {
   actionTypes,
   ConditionToAction
 } from "../../../typescript/ConditionToAction";
+import { TickerData } from "../../../typescript/TickerData";
+import { Order } from "../../../typescript/Order";
 
 export abstract class TickerStrategy {
   protected action: actionTypes = "NONE";
@@ -49,5 +50,4 @@ export abstract class TickerStrategy {
       stopLimit: this.action === "STOP_LIMIT"
     };
   }
-
 }

@@ -1,8 +1,8 @@
 import Indicator from "./Indicator";
-import sumArrayOfNumbers from "../../../utils/sumArrayOfNumbers";
+
 import exponentialMovingAverage from "../formulas/exponentialMovingAverage";
 
-export default class ExponentialMovingAverage extends Indicator {
+export default class ExponentialMovingAverage extends Indicator<number> {
   constructor(period: number) {
     super(period);
   }

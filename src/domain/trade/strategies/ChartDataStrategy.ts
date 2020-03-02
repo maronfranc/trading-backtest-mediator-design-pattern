@@ -1,10 +1,11 @@
-import { ChartData } from "../../../typescript";
 import { riskReward } from "../formulas/riskReward";
-import { Order } from "../../../typescript/Order";
+
 import {
   actionTypes,
   ConditionToAction
 } from "../../../typescript/ConditionToAction";
+import { ChartData } from "../../../typescript/ChartData";
+import { Order } from "../../../typescript/Order";
 
 export abstract class ChartDataStrategy {
   protected action: actionTypes = "NONE";

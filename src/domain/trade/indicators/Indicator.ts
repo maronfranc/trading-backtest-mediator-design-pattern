@@ -1,16 +1,15 @@
-import { ChartData } from "../../../typescript";
+import { ChartData } from "../../../typescript/ChartData";
 
 /**
  * Classe abstrata que guarda um vetor com o tamanho
  * máximo igual ao this.period.
  */
-export default abstract class Indicator {
+export default abstract class Indicator<T> {
   protected arrValues: number[];
-  public indicator: number;
+  public indicator: T | undefined;
 
   constructor(public period: number) {
     this.arrValues = [];
-    this.indicator = 0;
   }
 
   /**

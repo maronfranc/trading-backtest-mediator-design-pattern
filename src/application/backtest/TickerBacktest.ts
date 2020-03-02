@@ -4,9 +4,9 @@ import ApiCaller, { normalizePair } from "../../infrastructure/http/ApiCaller";
 
 import Trade from "../../domain/trade/Trade";
 import TradeMediator from "../../domain/TradeMediator";
-import { PercentHandler } from "../../domain/trade/strategies";
+import PercentHandler from "../../domain/trade/strategies/tickerStrategries/PercentHandler";
 
-import { TickerData } from "../../typescript";
+import { TickerData } from "../../typescript/TickerData";
 
 const fileName = "Ticker Portfolio";
 
@@ -33,7 +33,7 @@ class TickerBacktest {
 
       const trade = new Trade(Portfolio, normalizedPair);
       const tradeReply = TradeMediator.request(normalizedPair, data);
-      
+
       if (tradeReply.buy) trade.buy(+data.highestBid);
       else if (tradeReply.takeProfit) trade.buy(+data.highestBid);
       else if (tradeReply.stopLimit) trade.sell(+data.lowestAsk);

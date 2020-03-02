@@ -4,9 +4,9 @@ import ApiCaller from "../../infrastructure/http/ApiCaller";
 
 import Trade from "../../domain/trade/Trade";
 import TradeMediator from "../../domain/TradeMediator";
-import { EMAcrossHandler } from "../../domain/trade/strategies";
+import EMAcrossHandler from "../../domain/trade/strategies/chartDataStrategies/EMAcrossHandler";
 
-import { ChartData } from "../../typescript";
+import { ChartData } from "../../typescript/ChartData";
 
 const fileName = "Chart Data Portfolio";
 
